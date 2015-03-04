@@ -1,0 +1,30 @@
+body {
+	background-color: #F0F0F0;
+}
+
+textarea {
+	background-color: gray;
+
+	position: absolute;
+	margin-top: 5%;
+	margin-bottom: 5%;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	width: 80%;
+	height: 80%;
+
+	display: block;
+	box-sizing: border-box;
+	padding: 50px;
+	resize: none;
+	border: 3px solid #B8B8B8;
+	
+	text-align: center;
+	font-family: Futura, Trebuchet MS, Arial, sans-serif;
+	color: white;
+	font-size: 2.5em;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
+		<script src="jquery-1.11.2.js"></script>
+		<title>typeboogie</title>
+
+	</head>
+	<body>
+
+		<textarea></textarea>
+
+		<script type="text/javascript">
+
+		var keyHit = 0;
+
+		$(document).keypress(function(){
+
+		keyHit++;
+
+		if ( keyHit == 5 ) {
+		var setR = Math.floor(Math.random() * (255 - 0)) + 0;
+		var setG = Math.floor(Math.random() * (255 - 0)) + 0;
+		var setB = Math.floor(Math.random() * (255 - 0)) + 0;
+		var newColor = 'rgb(' + setR + ', ' + setG + ', ' + setB + ')';
+		$( "textarea" ).css('background-color', newColor);
+
+		keyHit = 0;}
+		
+		});
+
+		$( "textarea" ).text( "TYPE YOUR BOOGIE ON\n\n" );
+		</script>
+
+	</body>
+</html>
