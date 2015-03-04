@@ -9,28 +9,49 @@
 	</head>
 	<body>
 
+		<p>how fast do you want to boogie?</p>
+		
+		<form id="setRate">
+
+			<input type="number" id="rate"></input>
+
+		</form>
+
 		<textarea></textarea>
 
 		<script type="text/javascript">
 
-		var keyHit = 0;
+			var keyHit = 0;
 
-		$(document).keypress(function(){
+			$(document).keypress(function(){
 
-		keyHit++;
+				var boogieRate = $('#rate').val();
 
-		if ( keyHit == 5 ) {
-		var setR = Math.floor(Math.random() * (255 - 0)) + 0;
-		var setG = Math.floor(Math.random() * (255 - 0)) + 0;
-		var setB = Math.floor(Math.random() * (255 - 0)) + 0;
-		var newColor = 'rgb(' + setR + ', ' + setG + ', ' + setB + ')';
-		$( "textarea" ).css('background-color', newColor);
+				keyHit++;
 
-		keyHit = 0;}
-		
-		});
+				if ( keyHit == boogieRate ) {
+				var setR = Math.floor(Math.random() * (255 - 0)) + 0;
+				var setG = Math.floor(Math.random() * (255 - 0)) + 0;
+				var setB = Math.floor(Math.random() * (255 - 0)) + 0;
+				var newColor = 'rgb(' + setR + ', ' + setG + ', ' + setB + ')';
+				$( "textarea" ).css('background-color', newColor);
 
-		$( "textarea" ).text( "TYPE YOUR BOOGIE ON\n\n" );
+				keyHit = 0;
+				}
+			});
+
+			$(document).keyup(function(){
+
+				boogieRate = $('#rate').val();
+
+				if (keyHit > boogieRate) {
+					keyHit = 0;
+				}
+
+			});
+
+			$( "textarea" ).text( "TYPE YOUR BOOGIE ON\n\n" );
+
 		</script>
 
 	</body>
