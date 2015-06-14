@@ -1,58 +1,106 @@
 <!DOCTYPE html>
 <html>
-	<head>
+    <head>
+        <link type="text/css" rel="stylesheet" href="jquery-ui.min.css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="jquery-ui.min.js"></script>
+        <script charset="utf-8" src="beep/Beep.js"></script>
+        <script charset="utf-8" src="beep/Beep.Note.js"></script>       
+        <script charset="utf-8" src="beep/Beep.Voice.js"></script>
+        <link type="text/css" rel="stylesheet" href="stylesheet.css"/>
 
-		<link type="text/css" rel="stylesheet" href="stylesheet.css"/>
-		<script src="jquery-1.11.2.js"></script>
-		<title>typeboogie</title>
+        <title>typeboogie</title>
+        <script>
+            $(function() {
+                $( "#radio" ).buttonset();
+            });
 
-	</head>
-	<body>
+        </script>
+    </head>
 
-		<p>how fast do you want to boogie?</p>
-		
-		<form id="setRate">
+    <body>
+        <p>how fast do you want to boogie?</p>
 
-			<input type="number" id="rate"></input>
+        <form>
+            <div id="radio">
+                <input type="radio" id="slow" name="radio-rate" value=9><label for="slow">Slow</label>
+                <input type="radio" id="medium" name="radio-rate" value=6 checked="checked"><label for="medium">Medium</label>
+                <input type="radio" id="fast" name="radio-rate" value=3><label for="fast">Fast</label>
+            </div>
+        </form>
 
-		</form>
+        <textarea></textarea>
 
-		<textarea></textarea>
+        <script type="text/javascript">
+            var keyHit = 0;
+            var voice;
+            var notes = [130.81, 146.84, 164.81, 174.62, 195.99, 220.0, 246.94, 261.62, 293.66, 329.63, 349.23, 392.0, 440.0, 493.9, 523.25, 587.31, 659.25, 698.46, 783.99, 880.0, 987.8, 1046.5, 1174.7, 1318.5, 1397.0, 1567.9, 1760.0, 1975.6, 2093.0];
+            $(document).keypress(function(){
+                var boogieRate = $("input[name='radio-rate']:checked").val();
+                keyHit++;
+                if ( boogieRate == 9 ) {
+                    if ( keyHit == 8 ) {
+                        voice.pause();
+                        
+                    }
+                }
+                else if ( boogieRate == 6) {
+                    if ( keyHit == 5 ) {
+                        voice.pause();
+                        
+                    }
+                }
+                else if ( boogieRate == 3) {
+                    if ( keyHit == 2 ) {
+                        voice.pause();
+                    }
+                }
+                if ( keyHit == boogieRate ) {
+                var setR = Math.floor(Math.random() * (255 - 0)) + 0;
+                var setG = Math.floor(Math.random() * (255 - 0)) + 0;
+                var setB = Math.floor(Math.random() * (255 - 0)) + 0;
+                var newColor = 'rgb(' + setR + ', ' + setG + ', ' + setB + ')';
+                $( "textarea" ).css('background-color', newColor);
+                var setNote = Math.floor(Math.random() * (29 - 0)) + 0;
+                voice = new Beep.Voice({hertz:notes[setNote]});
+                if ( boogieRate == 9 ) {
+                    voice.setOscillatorType( 'sine' );
+                    voice.setAttackDuration( 0.4 );
+                    voice.setAttackGain(.2);
+                }
+                else if ( boogieRate == 6) {
+                    voice.setOscillatorType( 'square' );
+                    voice.setAttackDuration( 0.2 );
+                    voice.setAttackGain(.2);
+                }
+                else if ( boogieRate == 3) {
+                    voice.setOscillatorType( 'sawtooth' );
+                    voice.setAttackDuration( 0.1 );
+                    voice.setAttackGain(.2);
+                }
+                voice.play();
+                keyHit = 0;
+                }
+            });
 
-		<script type="text/javascript">
+            $(document).click(function(){
+                $("input:radio[name='radio-rate']").change(function(){
+                    voice.pause();
+                    voice.play();
+                });
+            });
 
-			var keyHit = 0;
+            $(document).keyup(function(){
+                
+                boogieRate = $("input[name='radio-rate']:checked").val();
 
-			$(document).keypress(function(){
+                if (keyHit > boogieRate) {
 
-				var boogieRate = $('#rate').val();
-
-				keyHit++;
-
-				if ( keyHit == boogieRate ) {
-				var setR = Math.floor(Math.random() * (255 - 0)) + 0;
-				var setG = Math.floor(Math.random() * (255 - 0)) + 0;
-				var setB = Math.floor(Math.random() * (255 - 0)) + 0;
-				var newColor = 'rgb(' + setR + ', ' + setG + ', ' + setB + ')';
-				$( "textarea" ).css('background-color', newColor);
-
-				keyHit = 0;
-				}
-			});
-
-			$(document).keyup(function(){
-
-				boogieRate = $('#rate').val();
-
-				if (keyHit > boogieRate) {
-					keyHit = 0;
-				}
-
-			});
-
-			$( "textarea" ).text( "TYPE YOUR BOOGIE ON\n\n" );
-
-		</script>
-
-	</body>
+                    keyHit = 0;
+                }
+                
+            });
+            $( "textarea" ).text( "\n" );
+        </script>
+    </body>
 </html>
