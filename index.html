@@ -23,9 +23,9 @@
 
         <form>
             <div id="radio">
-                <input type="radio" id="slow" name="radio-rate" value=9><label for="slow">Slow</label>
-                <input type="radio" id="medium" name="radio-rate" value=6 checked="checked"><label for="medium">Medium</label>
-                <input type="radio" id="fast" name="radio-rate" value=2><label for="fast">Fast</label>
+                <input type="radio" id="slow" name="radio-rate" value=9><label for="slow">Gentle Morning</label>
+                <input type="radio" id="medium" name="radio-rate" value=6 checked="checked"><label for="medium">Bright Afternoon</label>
+                <input type="radio" id="fast" name="radio-rate" value=3><label for="fast">Late Night</label>
             </div>
         </form>
 
@@ -53,7 +53,7 @@
                         
                     }
                 }
-                else if ( boogieRate == 2) {
+                else if ( boogieRate == 3) {
                     if ( keyHit == 1 ) {
                         voice.pause();
                     }
@@ -70,9 +70,8 @@
                         
                     }
                 }
-                else if ( boogieRate == 2) {
-                   // harmonyKeyHit += 1;
-                    if ( harmonyKeyHit == 3 ) {
+                else if ( boogieRate == 3) {
+                    if ( harmonyKeyHit == 2 ) {
                         harmonyVoice.pause();
                     }
                 }                
@@ -94,34 +93,42 @@
                     voice.setAttackDuration( 0.2 );
                     voice.setAttackGain(.1);
                 }
-                else if ( boogieRate == 2) {
+                else if ( boogieRate == 3) {
                     voice.setOscillatorType( 'sawtooth' );
-                    voice.setAttackDuration( 0.1 );
+                    voice.setAttackDuration( 0.4 );
                     voice.setAttackGain(.2);
+
+                    var setHarmonyNote = Math.floor(Math.random() * (15 - 8)) + 8;
+                    harmonyVoice = new Beep.Voice({hertz:notes[setHarmonyNote]});
+                    harmonyVoice.setOscillatorType( 'sawtooth' );
+                    harmonyVoice.setAttackDuration( 0.6 );
+                    harmonyVoice.setAttackGain(.2);
+                    harmonyVoice.play();
+                    harmonyKeyHit = 0;
                 }
                 voice.play();
                 keyHit = 0;
                 }
                 else if ( harmonyKeyHit == boogieRate ) {
-                var setHarmonyNote = Math.floor(Math.random() * (15 - 8)) + 8;
-                harmonyVoice = new Beep.Voice({hertz:notes[setHarmonyNote]});
-                if ( boogieRate == 9 ) {
-                    harmonyVoice.setOscillatorType( 'sine' );
-                    harmonyVoice.setAttackDuration( 0.4 );
-                    harmonyVoice.setAttackGain(.2);
-                }
-                else if ( boogieRate == 6) {
-                    harmonyVoice.setOscillatorType( 'square' );
-                    harmonyVoice.setAttackDuration( 0.2 );
-                    harmonyVoice.setAttackGain(.2);
-                }
-                else if ( boogieRate == 2) {
-                    harmonyVoice.setOscillatorType( 'sawtooth' );
-                    harmonyVoice.setAttackDuration( 0.1 );
-                    harmonyVoice.setAttackGain(.2);
-                }
-                harmonyVoice.play();
-                harmonyKeyHit = 0;
+                    if (( boogieRate == 9) || ( boogieRate == 6)) {
+                        var setHarmonyNote = Math.floor(Math.random() * (15 - 8)) + 8;
+                        harmonyVoice = new Beep.Voice({hertz:notes[setHarmonyNote]});
+                        if ( boogieRate == 9 ) {
+                            harmonyVoice.setOscillatorType( 'sine' );
+                            harmonyVoice.setAttackDuration( 0.4 );
+                            harmonyVoice.setAttackGain(.2);
+                            harmonyVoice.play();
+                            harmonyKeyHit = 0;
+                        }
+                        else if ( boogieRate == 6) {
+                            harmonyVoice.setOscillatorType( 'square' );
+                            harmonyVoice.setAttackDuration( 0.2 );
+                            harmonyVoice.setAttackGain(.1);
+                            harmonyVoice.play();
+                            harmonyKeyHit = 0;
+                        }
+
+                    }
                 }
             });
 
