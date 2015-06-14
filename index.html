@@ -95,14 +95,14 @@
                 }
                 else if ( boogieRate == 3) {
                     voice.setOscillatorType( 'sawtooth' );
-                    voice.setAttackDuration( 0.4 );
+                    // voice.setAttackDuration( 0.4 );
                     voice.setAttackGain(.2);
 
                     var setHarmonyNote = Math.floor(Math.random() * (15 - 8)) + 8;
                     harmonyVoice = new Beep.Voice({hertz:notes[setHarmonyNote]});
                     harmonyVoice.setOscillatorType( 'sawtooth' );
-                    harmonyVoice.setAttackDuration( 0.6 );
-                    harmonyVoice.setAttackGain(.2);
+                    harmonyVoice.setAttackDuration( 0.2 );
+                    harmonyVoice.setAttackGain(.1);
                     harmonyVoice.play();
                     harmonyKeyHit = 0;
                 }
