@@ -39,46 +39,27 @@
             var notes = [261.62, 293.66, 329.63, 349.23, 392.0, 440.0, 493.9, 523.25, 587.31, 659.25, 698.46, 783.99, 880.0, 987.8, 1046.5];
             $(document).keypress(function(){
                 var boogieRate = $("input[name='radio-rate']:checked").val();
+
                 keyHit++;
                 harmonyKeyHit++;
-                if ( boogieRate == 9 ) {
-                    if ( keyHit == 8 ) {
-                        voice.pause();
-                        
-                    }
-                }
-                else if ( boogieRate == 6) {
-                    if ( keyHit == 5 ) {
-                        voice.pause();
-                        
-                    }
-                }
-                else if ( boogieRate == 3) {
-                    if ( keyHit == 1 ) {
-                        voice.pause();
-                    }
-                }
-                if ( boogieRate == 9 ) {
-                    if ( harmonyKeyHit == 8 ) {
-                        harmonyVoice.pause();
-                        
-                    }
-                }
-                else if ( boogieRate == 6) {
-                    if ( harmonyKeyHit == 5 ) {
-                        harmonyVoice.pause();
-                        
-                    }
-                }
-                else if ( boogieRate == 3) {
-                    if ( harmonyKeyHit == 2 ) {
-                        harmonyVoice.pause();
-                    }
-                }                
+                              
                 if ( keyHit == boogieRate ) {
-                var setR = Math.floor(Math.random() * (255 - 0)) + 0;
-                var setG = Math.floor(Math.random() * (255 - 0)) + 0;
-                var setB = Math.floor(Math.random() * (255 - 0)) + 0;
+                    if ( boogieRate == 9) {
+                        var setR = Math.floor(Math.random() * (70 - 0)) + 0;
+                        var setG = Math.floor(Math.random() * (70 - 0)) + 0;
+                        var setB = Math.floor(Math.random() * (100 - 0)) + 0;
+                    }
+                    else if ( boogieRate == 9) {
+                        var setR = Math.floor(Math.random() * (195 - 0)) + 0;
+                        var setG = Math.floor(Math.random() * (160 - 0)) + 0;
+                        var setB = Math.floor(Math.random() * (160 - 0)) + 0;
+                    }
+                    else {
+                        var setR = Math.floor(Math.random() * (255 - 0)) + 0;
+                        var setG = Math.floor(Math.random() * (255 - 0)) + 0;
+                        var setB = Math.floor(Math.random() * (255 - 0)) + 0;
+                    }
+                
                 var newColor = 'rgb(' + setR + ', ' + setG + ', ' + setB + ')';
                 $( "textarea" ).css('background-color', newColor);
                 var setNote = Math.floor(Math.random() * (8 - 0)) + 0;
@@ -130,16 +111,43 @@
 
                     }
                 }
+                if ( boogieRate == 9 ) {
+                    if ( keyHit == 8 ) {
+                        voice.pause();
+                        
+                    }
+                }
+                else if ( boogieRate == 6) {
+                    if ( keyHit == 5 ) {
+                        voice.pause();
+                        
+                    }
+                }
+                else if ( boogieRate == 3) {
+                    if ( keyHit == 1 ) {
+                        voice.pause();
+                    }
+                }
+                if ( boogieRate == 9 ) {
+                    if ( harmonyKeyHit == 8 ) {
+                        harmonyVoice.pause();
+                        
+                    }
+                }
+                else if ( boogieRate == 6) {
+                    if ( harmonyKeyHit == 5 ) {
+                        harmonyVoice.pause();
+                        
+                    }
+                }
+                else if ( boogieRate == 3) {
+                    if ( harmonyKeyHit == 2 ) {
+                        harmonyVoice.pause();
+                    }
+                }  
             });
-
-            $(document).click(function(){
-                $("input:radio[name='radio-rate']").change(function(){
-                    voice.pause();
-                    harmonyVoice.pause();
-                    voice.play();
-                    harmonyVoice.play();
-                });
-            });
+                
+            
 
             $(document).keyup(function(){
                 
@@ -150,6 +158,15 @@
                     keyHit = 0;
                 }
                 
+            });
+            $(document).click(function(){
+                $("input:radio[name='radio-rate']").change(function(){
+                    voice.pause();
+                    harmonyVoice.pause();
+
+                    // voice.play();
+                    // harmonyVoice.play();
+                });
             });
             $( "textarea" ).text( "\n" );
         </script>
