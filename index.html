@@ -19,13 +19,13 @@
     </head>
 
     <body>
-        <p>how fast do you want to boogie?</p>
+        <p>how do you want to boogie?</p>
 
         <form>
             <div id="radio">
                 <input type="radio" id="slow" name="radio-rate" value=9><label for="slow">Slow</label>
                 <input type="radio" id="medium" name="radio-rate" value=6 checked="checked"><label for="medium">Medium</label>
-                <input type="radio" id="fast" name="radio-rate" value=3><label for="fast">Fast</label>
+                <input type="radio" id="fast" name="radio-rate" value=2><label for="fast">Fast</label>
             </div>
         </form>
 
@@ -33,11 +33,14 @@
 
         <script type="text/javascript">
             var keyHit = 0;
+            var harmonyKeyHit = keyHit - 3;
             var voice;
-            var notes = [130.81, 146.84, 164.81, 174.62, 195.99, 220.0, 246.94, 261.62, 293.66, 329.63, 349.23, 392.0, 440.0, 493.9, 523.25, 587.31, 659.25, 698.46, 783.99, 880.0, 987.8, 1046.5, 1174.7, 1318.5, 1397.0, 1567.9, 1760.0, 1975.6, 2093.0];
+            var harmonyVoice;
+            var notes = [261.62, 293.66, 329.63, 349.23, 392.0, 440.0, 493.9, 523.25, 587.31, 659.25, 698.46, 783.99, 880.0, 987.8, 1046.5];
             $(document).keypress(function(){
                 var boogieRate = $("input[name='radio-rate']:checked").val();
                 keyHit++;
+                harmonyKeyHit++;
                 if ( boogieRate == 9 ) {
                     if ( keyHit == 8 ) {
                         voice.pause();
@@ -50,18 +53,36 @@
                         
                     }
                 }
-                else if ( boogieRate == 3) {
-                    if ( keyHit == 2 ) {
+                else if ( boogieRate == 2) {
+                    if ( keyHit == 1 ) {
                         voice.pause();
                     }
                 }
+                if ( boogieRate == 9 ) {
+                    if ( harmonyKeyHit == 8 ) {
+                        harmonyVoice.pause();
+                        
+                    }
+                }
+                else if ( boogieRate == 6) {
+                    if ( harmonyKeyHit == 5 ) {
+                        harmonyVoice.pause();
+                        
+                    }
+                }
+                else if ( boogieRate == 2) {
+                   // harmonyKeyHit += 1;
+                    if ( harmonyKeyHit == 3 ) {
+                        harmonyVoice.pause();
+                    }
+                }                
                 if ( keyHit == boogieRate ) {
                 var setR = Math.floor(Math.random() * (255 - 0)) + 0;
                 var setG = Math.floor(Math.random() * (255 - 0)) + 0;
                 var setB = Math.floor(Math.random() * (255 - 0)) + 0;
                 var newColor = 'rgb(' + setR + ', ' + setG + ', ' + setB + ')';
                 $( "textarea" ).css('background-color', newColor);
-                var setNote = Math.floor(Math.random() * (29 - 0)) + 0;
+                var setNote = Math.floor(Math.random() * (8 - 0)) + 0;
                 voice = new Beep.Voice({hertz:notes[setNote]});
                 if ( boogieRate == 9 ) {
                     voice.setOscillatorType( 'sine' );
@@ -73,7 +94,7 @@
                     voice.setAttackDuration( 0.2 );
                     voice.setAttackGain(.1);
                 }
-                else if ( boogieRate == 3) {
+                else if ( boogieRate == 2) {
                     voice.setOscillatorType( 'sawtooth' );
                     voice.setAttackDuration( 0.1 );
                     voice.setAttackGain(.2);
@@ -81,12 +102,35 @@
                 voice.play();
                 keyHit = 0;
                 }
+                else if ( harmonyKeyHit == boogieRate ) {
+                var setHarmonyNote = Math.floor(Math.random() * (15 - 8)) + 8;
+                harmonyVoice = new Beep.Voice({hertz:notes[setHarmonyNote]});
+                if ( boogieRate == 9 ) {
+                    harmonyVoice.setOscillatorType( 'sine' );
+                    harmonyVoice.setAttackDuration( 0.4 );
+                    harmonyVoice.setAttackGain(.2);
+                }
+                else if ( boogieRate == 6) {
+                    harmonyVoice.setOscillatorType( 'square' );
+                    harmonyVoice.setAttackDuration( 0.2 );
+                    harmonyVoice.setAttackGain(.2);
+                }
+                else if ( boogieRate == 2) {
+                    harmonyVoice.setOscillatorType( 'sawtooth' );
+                    harmonyVoice.setAttackDuration( 0.1 );
+                    harmonyVoice.setAttackGain(.2);
+                }
+                harmonyVoice.play();
+                harmonyKeyHit = 0;
+                }
             });
 
             $(document).click(function(){
                 $("input:radio[name='radio-rate']").change(function(){
                     voice.pause();
+                    harmonyVoice.pause();
                     voice.play();
+                    harmonyVoice.play();
                 });
             });
 
